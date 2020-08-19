@@ -1,0 +1,32 @@
+// https://sass-lang.com/documentation/at-rules/mixin
+
+// 无参数 mixin
+@mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin horizontal-list {
+  @include reset-list;
+
+  li {
+    display: inline-block;
+
+    margin: {
+      left: -2px;
+      right: 2em;
+    }
+  }
+}
+
+
+
+// 有参数 mixin 
+@mixin rtl($property, $ltr-value, $rtl-value) {
+  #{$property}: $ltr-value;
+
+  [dir=rtl] & {
+    #{$property}: $rtl-value;
+  }
+}

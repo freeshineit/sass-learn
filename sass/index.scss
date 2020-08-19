@@ -1,0 +1,158 @@
+@import './theme/varibles';
+@import './theme/mixin';
+
+body {
+  font-size: 14px;
+  color: $primary-color;
+
+  padding: abs($number: -10px);
+
+  .#{$prefix}-nav {
+    color: $blue;
+  }
+
+
+  // @mixin/@include 混合
+  nav ul.mixin {
+    @include horizontal-list;
+
+  }
+
+  .sidebar.mixin {
+    @include rtl(float, left, right);
+  }
+
+  // @extend 
+  .alert {
+    color: #000;
+
+    // 这个样式也会被继承
+    button {
+      width: 180px;
+    }
+  }
+
+  .alert-info {
+    @extend .alert;
+    padding: 10px;
+  }
+
+  // 单行注释
+  /*
+    多行注释
+  */
+  /*!
+    强制输出多行注释
+  */
+
+  // https://sass-lang.com/documentation/values
+  // Sass 数据类型
+  // 数字 number
+  // 字符串 string
+  // 颜色 color
+  // 布尔型 boolean
+  // 空值 null
+  // 数组 list
+  // map
+  // Functions
+
+
+  // https://sass-lang.com/documentation/at-rules/control
+  // 控制指令
+
+  // @if @else @else if
+  // https://sass-lang.com/documentation/at-rules/control/if
+  @mixin avatar($size, $circle: false) {
+    width: $size;
+    height: $size;
+
+    @if $circle {
+      border-radius: $size / 2;
+    }
+
+    @else {
+      border-radius: 0;
+    }
+  }
+
+  .square-av {
+    @include avatar(100px, $circle: false);
+  }
+
+  .circle-av {
+    @include avatar(100px, $circle: true);
+  }
+
+  // @each 循环
+  // https://sass-lang.com/documentation/at-rules/control/each
+
+  $sizes: 40px 50px 80px;
+
+  @each $size in $sizes {
+    .icon-#{$size} {
+      font-size: $size;
+      height: $size;
+      width: $size;
+    }
+  }
+
+  $icons: ("eye": "\f112", "start": "\f12e", "stop": "\f12f");
+
+  @each $name,
+  $glyph in $icons {
+    .icon-#{$name}:before {
+      display: inline-block;
+      font-family: "Icon Font";
+      content: $glyph;
+    }
+  }
+
+
+  // @for 循环
+  // https://sass-lang.com/documentation/at-rules/control/for
+  // @for ... from ... to ... {}
+  // @for ... from ... through ... {}
+  $base-color: #036;
+
+  // 从1开始到3 循环3次
+  @for $i from 1 through 3 {
+    ul:nth-child(3n + #{$i}) {
+      background-color: lighten($base-color, $i * 5%);
+    }
+  }
+
+  // @while 循环
+  // https://sass-lang.com/documentation/at-rules/control/while
+
+  $total: 5;
+
+  @while $total>0 {
+    .item-#{$total} {
+      padding: $total * 5px
+    }
+
+    $total: $total - 1
+  }
+
+
+
+  // @function 定义函数
+  // https://sass-lang.com/documentation/at-rules/function
+  @function myFunction () {}
+
+  @function pow($base, $exponent) {
+    $result: 1;
+
+    @for $_ from 1 through $exponent {
+      $result: $result * $base;
+    }
+
+    @return $result;
+  }
+
+  .sidebar {
+    float: left;
+    margin-left: pow(4, 3) * 1px;
+  }
+
+}
